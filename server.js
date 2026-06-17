@@ -1,4 +1,6 @@
 const express = require("express");
+require("dotenv").config();
+
 const mongoose = require("mongoose");
 
 const userRoutes = require("./routes/userRoutes");
@@ -25,5 +27,7 @@ mongoose.connect("mongodb://localhost:27017/mydb")
 .catch((err) => {
     console.log(err);
 });
+
+console.log("JWT_SECRET:", process.env.JWT_SECRET);
 
 

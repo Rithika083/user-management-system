@@ -2,7 +2,7 @@ const express = require("express");
 
 const router = express.Router();
 
-const { protect } = require("../middleware/authMiddleware");
+const { protect ,adminOnly } = require("../middleware/authMiddleware");
 
 const {
     registerUser,
@@ -15,7 +15,7 @@ const {
 
 router.post("/register", registerUser);
 
-router.get("/users", protect , getAllUsers);
+router.get("/users", protect , adminOnly , getAllUsers);
 
 router.get("/user/:email", getUserByEmail);
 

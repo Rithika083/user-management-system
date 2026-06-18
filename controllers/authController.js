@@ -90,4 +90,31 @@ const getProfile = async (req, res) => {
     }
 };
 
-module.exports = { registerUser , loginUser , getProfile };
+const updateProfile = async (req, res) => {
+    try {
+        const { name, email } = req.body;
+
+        const user = await User.findByIdAndUpdate(
+            req.user.id,
+            { name, email },
+            { new: true }
+        ).select("-password");
+
+        res.status(200).json({
+            message: "Profile updated successfully",
+            user
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            message: error.message
+        });
+    }
+};
+
+module.exports = { 
+    registerUser , 
+    loginUser , 
+    getProfile ,
+    updateProfile
+ };

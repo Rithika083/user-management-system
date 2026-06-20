@@ -2,14 +2,13 @@ import { useEffect, useState } from "react";
 import API from "../services/api";
 
 function Profile() {
-  const [user, setUser] = useState(null);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
 
   useEffect(() => {
     const fetchProfile = async () => {
       try {
         const token = localStorage.getItem("token");
-
-        console.log("Token:", token);
 
         const res = await API.get("/profile", {
           headers: {
@@ -17,29 +16,71 @@ function Profile() {
           },
         });
 
-        console.log("Profile Response:", res.data);
-
-        setUser(res.data);
+        setName(res.data.name);
+        setEmail(res.data.email);
       } catch (error) {
-        console.log("Profile Error:", error);
-        console.log("Response:", error.response);
+        console.log(error);
       }
     };
 
     fetchProfile();
   }, []);
 
+  const handleUpdate = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      const res = await API.put(
+        "/profile",
+        {
+          name,
+          email,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      alert(res.data.message);
+    } catch (error) {
+      alert(error.response?.data?.message || "Update failed");
+    }
+  };
+
   return (
     <div>
       <h1>Profile Page</h1>
 
-      {user && (
-        <>
-          <p>Name: {user.name}</p>
-          <p>Email: {user.email}</p>
-          <p>Role: {user.role}</p>
-        </>
-      )}
+      <input
+        type="text"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
+
+      <br /><br />
+
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+
+      <br /><br />
+
+      <button onClick={handleUpdate}>
+        Update Profile
+      </button>
+
+      <button
+        onClick={() => {
+        localStorage.removeItem("token");
+        window.location.href = "/login";
+      }}
+    >
+      Logout
+    </button>
     </div>
   );
 }

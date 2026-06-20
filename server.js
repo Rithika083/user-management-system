@@ -20,6 +20,10 @@ app.use(
 
 app.use(express.json());
 
+app.get("/test", (req, res) => {
+  res.json({ message: "Backend working" });
+});
+
 app.use("/", userRoutes);
 app.use("/api/auth", authRoutes);
 

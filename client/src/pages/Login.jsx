@@ -28,32 +28,43 @@ function Login() {
   };
 
   return (
-    <div>
-      <h1>Login Page</h1>
+  <div className="container d-flex justify-content-center align-items-center vh-100">
+    <div className="card p-4 shadow" style={{ width: "400px" }}>
+      <h2 className="text-center mb-4">Login</h2>
 
       <form onSubmit={handleLogin}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+        <div className="mb-3">
+          <label className="form-label">Email</label>
+          <input
+            type="email"
+            className="form-control"
+            placeholder="Enter email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
 
-        <br /><br />
+        <div className="mb-3">
+          <label className="form-label">Password</label>
+          <input
+            type="password"
+            className="form-control"
+            placeholder="Enter password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-
-        <br /><br />
-
-        <button type="submit">Login</button>
+        <button
+          type="submit"
+          className="btn btn-primary w-100"
+        >
+          Login
+        </button>
       </form>
     </div>
+  </div>
   );
 }
-
+ 
 export default Login;

@@ -50,38 +50,47 @@ function Profile() {
   };
 
   return (
-    <div>
-      <h1>Profile Page</h1>
+  <div className="container d-flex justify-content-center align-items-center vh-100">
+    <div className="card p-4 shadow" style={{ width: "400px" }}>
+      <h2 className="text-center mb-4">Profile</h2>
 
-      <input
-        type="text"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
+      <form onSubmit={handleUpdate}>
+        <div className="mb-3">
+          <label className="form-label">Name</label>
+          <input
+            type="text"
+            className="form-control"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </div>
 
-      <br /><br />
+        <div className="mb-3">
+          <label className="form-label">Email</label>
+          <input
+            type="email"
+            className="form-control"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
 
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
+        <button
+          type="submit"
+          className="btn btn-primary"
+        >
+          Update Profile
+        </button>
 
-      <br /><br />
-
-      <button onClick={handleUpdate}>
-        Update Profile
-      </button>
-
-      <button
-        onClick={() => {
-        localStorage.removeItem("token");
-        window.location.href = "/login";
-      }}
-    >
-      Logout
-    </button>
+        <button
+          type="button"
+          className="btn btn-danger ms-2"
+        >
+          Logout
+        </button>
+      </form>
     </div>
+  </div>
   );
 }
 

@@ -25,11 +25,12 @@ function Admin() {
   }, []);
 
   return (
-    <div>
-      <h1>Admin Dashboard</h1>
+  <div className="container mt-5">
+    <div className="card shadow p-4">
+      <h2 className="text-center mb-4">Admin Dashboard</h2>
 
-      <table border="1">
-        <thead>
+      <table className="table table-striped table-bordered">
+        <thead className="table-dark">
           <tr>
             <th>Name</th>
             <th>Email</th>
@@ -42,12 +43,19 @@ function Admin() {
             <tr key={user._id}>
               <td>{user.name}</td>
               <td>{user.email}</td>
-              <td>{user.role}</td>
+              <td>
+                {user.role === "admin" ? (
+                  <span className="badge bg-success">Admin</span>
+                ) : (
+                  <span className="badge bg-secondary">User</span>
+                )}
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
     </div>
+  </div>
   );
 }
 

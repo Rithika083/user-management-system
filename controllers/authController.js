@@ -6,6 +6,18 @@ const registerUser = async (req, res) => {
     try {
         const { name, email, password, role } = req.body;
 
+        if (!name || !email || !password) {
+            return res.status(400).json({
+               message: "All fields are required"
+            });
+        }
+
+        if (password.length < 6) {
+            return res.status(400).json({
+               message: "Password must be at least 6 characters"
+            });
+        }
+
         const existingUser = await User.findOne({ email });
 
         if (existingUser) {
@@ -37,6 +49,12 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;
+
+        if (!email || !password) {
+           return res.status(400).json({
+               message: "Email and password are required"
+            });
+        }
 
         const user = await User.findOne({ email });
 
@@ -94,6 +112,12 @@ const getProfile = async (req, res) => {
 const updateProfile = async (req, res) => {
     try {
         const { name, email } = req.body;
+
+        if (!name || !email) {
+            return res.status(400).json({
+               message: "Name and email are required"
+            });
+        }
 
         const user = await User.findByIdAndUpdate(
             req.user.id,

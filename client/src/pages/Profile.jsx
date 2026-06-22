@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import API from "../services/api";
 
 function Profile() {
+  const navigate = useNavigate();
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
 
@@ -26,7 +29,7 @@ function Profile() {
     fetchProfile();
   }, []);
 
-  const handleUpdate = async () => {
+  const handleUpdate = async (e) => {
     try {
       const token = localStorage.getItem("token");
 
@@ -47,6 +50,12 @@ function Profile() {
     } catch (error) {
       alert(error.response?.data?.message || "Update failed");
     }
+  };
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+
+    navigate("/login");
   };
 
   return (
@@ -85,6 +94,7 @@ function Profile() {
         <button
           type="button"
           className="btn btn-danger ms-2"
+          onClick={handleLogout}
         >
           Logout
         </button>
